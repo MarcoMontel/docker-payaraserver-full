@@ -46,14 +46,16 @@ EOF\n'\
 RUN ${PAYARA_PATH}/bin/asadmin --user ${ADMIN_USER} --passwordfile=/opt/tmpfile change-admin-password && \
  ${PAYARA_PATH}/bin/asadmin start-domain domain1 && \
  ${PAYARA_PATH}/bin/asadmin --user ${ADMIN_USER} --passwordfile=/opt/pwdfile enable-secure-admin && \
- ${PAYARA_PATH}/bin/asadmin stop-domain domain1
+ ${PAYARA_PATH}/bin/asadmin stop-domain domain1 && \
+ rm -rf ${PAYARA_PATH}/glassfish/domains/domain1/osgi-cache
 
- # payaradomain
+ # production domain
 RUN \
- ${PAYARA_PATH}/bin/asadmin --user ${ADMIN_USER} --passwordfile=/opt/tmpfile change-admin-password --domain_name=payaradomain && \
- ${PAYARA_PATH}/bin/asadmin start-domain payaradomain && \
+ ${PAYARA_PATH}/bin/asadmin --user ${ADMIN_USER} --passwordfile=/opt/tmpfile change-admin-password --domain_name=production && \
+ ${PAYARA_PATH}/bin/asadmin start-domain production && \
  ${PAYARA_PATH}/bin/asadmin --user ${ADMIN_USER} --passwordfile=/opt/pwdfile enable-secure-admin && \
- ${PAYARA_PATH}/bin/asadmin stop-domain payaradomain
+ ${PAYARA_PATH}/bin/asadmin stop-domain production && \
+ rm -rf ${PAYARA_PATH}/glassfish/domains/production/osgi-cache
 
 # cleanup
 RUN rm /opt/tmpfile
